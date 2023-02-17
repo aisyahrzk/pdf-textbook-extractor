@@ -14,10 +14,10 @@ content = ''
 book = pd.DataFrame(columns = ["chapter", "topic", "page_num","content"])
 
 # get isi kandungan
-index_page = [5,6]
+index_page = [4,5]
 
 for x in index_page:
-    with pdfplumber.open(r'textbook\Sejarah Tingkatan 1.pdf') as pdf:
+    with pdfplumber.open(r'textbook\Sejarah_Tingkatan_2 (1).pdf') as pdf:
         first_page = pdf.pages[x]
         result = first_page.extract_text()
     filename = "isi_kandungan.txt"
@@ -67,6 +67,7 @@ book = book[pd.notnull(book['page_num'])]
 book = book.reset_index(drop = True)
 
 
+df = pd.DataFrame(columns = ["chapter", "topic", "page_num","content"])
 
 
 #extract content from page num for each topic
@@ -76,15 +77,23 @@ for x in range(len(book)-1):
 
 
     for j in range(int(book.loc[x,'page_num'])+9,int(book.loc[x+1,'page_num'])+9):
-        with pdfplumber.open(r'textbook\Sejarah Tingkatan 1.pdf') as pdf:
+        with pdfplumber.open(r'textbook\Sejarah_Tingkatan_2 (1).pdf') as pdf:
             page = pdf.pages[j]
             result = page.extract_text()
-            content = content + result
-    
-    book.loc[x,"content"] = content
+
+        for line in result.splitlines():
+            content = line
+            chapter = book.loc[x,'chapter']
+            topic = book.loc[x,'topic']
+            page_num = j - 9
+            page = {'chapter': chapter, 'topic': topic,'page_num': page_num,'content':content}
+            df = df.append(page, ignore_index = True)
+        
 
 
 
 
-book.to_excel('isi_sejarahf1.xlsx')
+book.to_excel('isi_f2.xlsx')
+
+df.to_excel('byline_f2.xlsx')
 
