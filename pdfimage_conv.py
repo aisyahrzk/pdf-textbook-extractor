@@ -6,10 +6,6 @@ import os
 from PyPDF2 import PdfReader,PdfWriter
 
 
-
-
-
-
 pdf_file_path = 'Sejarah Tingkatan 1.pdf'
 file_base_name = 'sejarah_index'
 
