@@ -38,7 +38,7 @@ def preprocess_content(text):
 book = pd.DataFrame(columns = ["chapter", "topic", "page_num","content"])
 
 # change this index based on the textbook specific isi kandungan page
-index_page = [5,6]
+index_page = [4,5]
 
 for x in index_page:
     with pdfplumber.open(r'textbook\sej-ting-5.pdf') as pdf:
